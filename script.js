@@ -1,16 +1,25 @@
 //alert("yooo")
 
 $(function(){
-  $("button").click(function(){
+  let correctWords = $("#correctWords");
+  let incorrectWords = $("#incorrectWords")
+  $("#submit").click(function(){
     let userWord = $("#userWord").val();
     console.log(userWord + " debug");
+    
     if(userWord === words[rand]){
-      alert("correct")
+      correctWords.append(words[rand] +" ");
     }else{
-      alert("incorrect")
-    }
+      incorrectWords.append(words[rand] +" ");
+    } 
+
     rand = getRandomInt(words.length);
     $("#words").text(words[rand]);
+  })
+  $("#sayWordButton").click(function(){
+    var synth = window.speechSynthesis;
+    var utterThis = new SpeechSynthesisUtterance(words[rand]);
+    synth.speak(utterThis);
   })
   $.get('test.txt', function(data){
     words = data.split(" ");
@@ -25,4 +34,7 @@ $(function(){
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
+  
+  
+
 })
